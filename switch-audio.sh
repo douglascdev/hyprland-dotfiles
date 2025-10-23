@@ -6,10 +6,10 @@ echo "Default audio sink: $DEFAULT"
 DEFAULT_ID=$(wpctl inspect @DEFAULT_AUDIO_SINK@ | grep id | grep PipeWire | cut -d " " -f 2 | cut -d "," -f 1)
 echo "Default sink ID: $DEFAULT_ID"
 
-HDMI_SINK_ID=$(wpctl status | grep "Navi 31 HDMI/DP Audio Digital Stereo (HDMI 2)" | cut -d "." -f 1 | cut -c 11-)
+HDMI_SINK_ID=$(wpctl status | grep "Navi 31 HDMI/DP Audio Digital Stereo (HDMI 2)" | cut -d "." -f 1 | grep -o '[0-9]\+')
 echo "HDMI sink ID: $HDMI_SINK_ID"
 
-HEADSET_SINK_ID=$(wpctl status | grep "Starship/Matisse HD Audio Controller Analog Stereo" | head -1 | cut -d "." -f 1 | cut -c 11-)
+HEADSET_SINK_ID=$(wpctl status | grep "Starship/Matisse HD Audio Controller Analog Stereo" | head -1 | cut -d "." -f 1 | grep -o '[0-9]\+')
 echo "Headset sink ID: $HEADSET_SINK_ID"
 
 if [ $DEFAULT_ID -eq $HDMI_SINK_ID ] ; then
