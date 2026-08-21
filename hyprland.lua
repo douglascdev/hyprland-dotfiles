@@ -67,7 +67,7 @@ local browser     = "firefox"
 --
 hl.on("hyprland.start", function () 
    -- Start the Fedora KDE Polkit agent
-   hl.exec_cmd("/usr/libexec/kf6/polkit-kde-authentication-agent-1")
+   hl.exec_cmd("hyprpolkitagent")
    hl.exec_cmd("noctalia")
 --   hl.exec_cmd("nm-applet")
 --   hl.exec_cmd("waybar & hyprpaper & firefox")
