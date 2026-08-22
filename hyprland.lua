@@ -24,12 +24,12 @@ smw.setup({
 ------------------
 
 -- See https://wiki.hypr.land/Configuring/Basics/Monitors/
-hl.monitor({
-    output   = "",
-    mode     = "preferred",
-    position = "auto",
-    scale    = "auto",
-})
+-- hl.monitor({
+--     output   = "",
+--     mode     = "preferred",
+--     position = "auto",
+--     scale    = "auto",
+-- })
 
 hl.monitor({
     output   = "DP-2",
@@ -301,7 +301,7 @@ hl.bind(mainMod .. " + V", hl.dsp.window.float({ action = "toggle" }))
 hl.bind(mainMod .. " + R", hl.dsp.exec_cmd(ipc .. "panel-toggle launcher"))
 hl.bind(mainMod .. " + P", hl.dsp.window.pseudo())
 -- hl.bind(mainMod .. " + J", hl.dsp.layout("togglesplit"))    -- dwindle only
-hl.bind(mainMod .. " + O", hl.dsp.exec_cmd("~/.config/hypr/switch-audio.sh"))
+hl.bind(mainMod .. " + O", hl.dsp.exec_cmd("bash ~/.config/hypr/switch-audio.sh"))
 
 -- Move focus with mainMod + vim keys
 hl.bind(mainMod .. " + h", hl.dsp.focus({ direction = "left" }))
