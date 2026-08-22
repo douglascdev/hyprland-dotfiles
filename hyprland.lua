@@ -69,6 +69,7 @@ hl.on("hyprland.start", function ()
    -- Start the Fedora KDE Polkit agent
    hl.exec_cmd("hyprpolkitagent")
    hl.exec_cmd("noctalia")
+   hl.exec_cmd("noctalia msg wallpaper-set ~/.config/hypr/frieren2.png")
 --   hl.exec_cmd("nm-applet")
 --   hl.exec_cmd("waybar & hyprpaper & firefox")
 end)
