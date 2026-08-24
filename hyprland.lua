@@ -14,10 +14,6 @@ local ipc = "noctalia msg "
 
 -- plugin to split workspaces between monitors and provide independent numbering
 package.path = package.path .. ";./?.lua;./?/init.lua"
-local smw = require("plugins.split-monitor-workspaces")
-smw.setup({
-    workspace_count = 5, -- This will create 5 persistent workspaces on each monitor at startup
-})
 
 ------------------
 ---- MONITORS ----
@@ -316,26 +312,15 @@ hl.bind(mainMod .. " + SHIFT + L", hl.dsp.window.move({ direction = "right" }))
 hl.bind(mainMod .. " + SHIFT + K", hl.dsp.window.move({ direction = "up" }))
 hl.bind(mainMod .. " + SHIFT + J", hl.dsp.window.move({ direction = "down" }))
 
--- original template code:
--- for i = 1, 10 do
---     local key = i % 10 -- 10 maps to key 0
---     -- Switch workspaces with mainMod + [0-9]
---     hl.bind(mainMod .. " + " .. key, hl.dsp.focus({ workspace = i }))
---
---     -- Move window to a different workspace and switch to that workspace with mainMod + SHIFT + [0-9]
---     hl.bind(mainMod .. " + SHIFT + " .. key, hl.dsp.window.move({ workspace = i }))
---     -- Move window to a different workspace but keep current workspace with mainMod + CTRL + [0-9]
---     hl.bind(mainMod .. " + CTRL + " .. key, hl.dsp.window.move({ workspace = i, follow = false }))
--- end
---
--- code with split-monitor-workspaces plugin
-for i = 1, smw.get_amount_of_workspaces() do
-    local n = tostring(i)
-    if n == "10" then n = "0" end -- Optional if you configured 10 workspaces: bind workspace 10 to SUPER + 0
-    -- Switch to the Nth workspace on the currently focused monitor.
-    hl.bind(mainMod .. " +" .. n, smw.workspace(n))
-    -- Move the active window to the Nth workspace on the currently focused monitor silently (no focus change).
-    hl.bind(mainMod .. " + SHIFT +" .. n, smw.move_to_workspace_silent(n))
+for i = 1, 10 do
+    local key = i % 10 -- 10 maps to key 0
+    -- Switch workspaces with mainMod + [0-9]
+    hl.bind(mainMod .. " + " .. key, hl.dsp.focus({ workspace = i }))
+
+    -- Move window to a different workspace and switch to that workspace with mainMod + SHIFT + [0-9]
+    hl.bind(mainMod .. " + SHIFT + " .. key, hl.dsp.window.move({ workspace = i }))
+    -- Move window to a different workspace but keep current workspace with mainMod + CTRL + [0-9]
+    hl.bind(mainMod .. " + CTRL + " .. key, hl.dsp.window.move({ workspace = i, follow = false }))
 end
 
 -- Fullscreen - Window takes up the entire working space, keeping the margins.
