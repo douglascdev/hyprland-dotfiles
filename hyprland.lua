@@ -312,6 +312,12 @@ hl.bind(mainMod .. " + SHIFT + L", hl.dsp.window.move({ direction = "right" }))
 hl.bind(mainMod .. " + SHIFT + K", hl.dsp.window.move({ direction = "up" }))
 hl.bind(mainMod .. " + SHIFT + J", hl.dsp.window.move({ direction = "down" }))
 
+-- Resize windows with mainMod + ALT + vim keys
+hl.bind(mainMod .. " + ALT + H", hl.dsp.window.resize({ x = -40, y = 0,  relative = true }), { repeating = true })
+hl.bind(mainMod .. " + ALT + L", hl.dsp.window.resize({ x =  40, y = 0,  relative = true }), { repeating = true })
+hl.bind(mainMod .. " + ALT + K", hl.dsp.window.resize({ x = 0, y = -40, relative = true }), { repeating = true })
+hl.bind(mainMod .. " + ALT + J", hl.dsp.window.resize({ x = 0, y =  40, relative = true }), { repeating = true })
+
 for i = 1, 10 do
     local key = i % 10 -- 10 maps to key 0
     -- Switch workspaces with mainMod + [0-9]
