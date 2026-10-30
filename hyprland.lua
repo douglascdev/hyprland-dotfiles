@@ -335,14 +335,23 @@ hl.bind(mainMod .. " + ALT + K", hl.dsp.window.resize({ x = 0, y = -40, relative
 hl.bind(mainMod .. " + ALT + J", hl.dsp.window.resize({ x = 0, y =  40, relative = true }), { repeating = true })
 
 for i = 1, 10 do
-    local key = i % 10 -- 10 maps to key 0
-    -- Switch workspaces with mainMod + [0-9]
-    hl.bind(mainMod .. " + " .. key, hl.dsp.focus({ workspace = i }))
+    local key = i % 10
+    local modifier = mainMod
 
-    -- Move window to a different workspace and switch to that workspace with mainMod + SHIFT + [0-9]
-    hl.bind(mainMod .. " + SHIFT + " .. key, hl.dsp.window.move({ workspace = i }))
-    -- Move window to a different workspace but keep current workspace with mainMod + CTRL + [0-9]
-    hl.bind(mainMod .. " + CTRL + " .. key, hl.dsp.window.move({ workspace = i, follow = false }))
+    -- Shift workspaces 4, 5, 6 to use ALT and keys 1, 2, 3
+    if i >= 4 and i <= 6 then
+        modifier = "ALT"
+        key = i - 3
+    end
+
+    -- Switch workspaces
+    hl.bind(modifier .. " + " .. key, hl.dsp.focus({ workspace = i }))
+
+    -- Move window to a different workspace and switch to that workspace
+    hl.bind(modifier .. " + SHIFT + " .. key, hl.dsp.window.move({ workspace = i }))
+
+    -- Move window to a different workspace but keep current workspace
+    hl.bind(modifier .. " + CTRL + " .. key, hl.dsp.window.move({ workspace = i, follow = false }))
 end
 
 -- Fullscreen - Window takes up the entire working space, keeping the margins.
