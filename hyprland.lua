@@ -41,6 +41,11 @@ hl.monitor({
     scale    = "1",
 })
 
+hl.monitor({
+    output   = "HDMI-A-2",
+    disabled = true,
+})
+
 -- Permanently pin workspaces to specific monitors
 hl.workspace = {
     "1, monitor:DP-2, default:true",
