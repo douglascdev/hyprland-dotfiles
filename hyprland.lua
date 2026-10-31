@@ -47,14 +47,13 @@ hl.monitor({
 })
 
 -- Permanently pin workspaces to specific monitors
-hl.workspace = {
-    "1, monitor:DP-2, default:true",
-    "2, monitor:DP-2",
-    "3, monitor:DP-2",
-    "4, monitor:HDMI-A-1, default:true",
-    "5, monitor:HDMI-A-1",
-    "6, monitor:HDMI-A-1"
-}
+-- (1-3 belong to DP-2, 4-6 to HDMI-A-1; each monitor starts on its default)
+hl.workspace_rule({ workspace = "1", monitor = "DP-2",     default = true })
+hl.workspace_rule({ workspace = "2", monitor = "DP-2" })
+hl.workspace_rule({ workspace = "3", monitor = "DP-2" })
+hl.workspace_rule({ workspace = "4", monitor = "HDMI-A-1", default = true })
+hl.workspace_rule({ workspace = "5", monitor = "HDMI-A-1" })
+hl.workspace_rule({ workspace = "6", monitor = "HDMI-A-1" })
 
 ---------------------
 ---- MY PROGRAMS ----
@@ -336,23 +335,24 @@ hl.bind(mainMod .. " + ALT + K", hl.dsp.window.resize({ x = 0, y = -40, relative
 hl.bind(mainMod .. " + ALT + J", hl.dsp.window.resize({ x = 0, y =  40, relative = true }), { repeating = true })
 
 for i = 1, 10 do
-    local key = i % 10
-    local modifier = mainMod
+    local key = i % 10 -- 10 maps to key 0
 
-    -- Shift workspaces 4, 5, 6 to use ALT and keys 1, 2, 3
+    -- Switch workspaces with mainMod + [0-9]
+    hl.bind(mainMod .. " + " .. key, hl.dsp.focus({ workspace = i }))
+
+    -- Move window to a different workspace and switch to that workspace with mainMod + SHIFT + [0-9]
+    hl.bind(mainMod .. " + SHIFT + " .. key, hl.dsp.window.move({ workspace = i }))
+
+    -- Move window to a different workspace but keep current workspace with mainMod + CTRL + [0-9]
+    hl.bind(mainMod .. " + CTRL + " .. key, hl.dsp.window.move({ workspace = i, follow = false }))
+
+    -- Workspaces 4-6 live on the second monitor, so also make them reachable with ALT + 1/2/3
     if i >= 4 and i <= 6 then
-        modifier = "ALT"
-        key = i - 3
+        local altKey = i - 3
+        hl.bind("ALT + " .. altKey,         hl.dsp.focus({ workspace = i }))
+        hl.bind("ALT + SHIFT + " .. altKey, hl.dsp.window.move({ workspace = i }))
+        hl.bind("ALT + CTRL + " .. altKey,  hl.dsp.window.move({ workspace = i, follow = false }))
     end
-
-    -- Switch workspaces
-    hl.bind(modifier .. " + " .. key, hl.dsp.focus({ workspace = i }))
-
-    -- Move window to a different workspace and switch to that workspace
-    hl.bind(modifier .. " + SHIFT + " .. key, hl.dsp.window.move({ workspace = i }))
-
-    -- Move window to a different workspace but keep current workspace
-    hl.bind(modifier .. " + CTRL + " .. key, hl.dsp.window.move({ workspace = i, follow = false }))
 end
 
 -- Fullscreen - Window takes up the entire working space, keeping the margins.
